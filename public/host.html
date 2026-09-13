@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0" />
+<title>CAPITALE — Host Panel</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app-shell">
+  <div class="host-shell">
+    <div class="host-title">🎮 CAPITALE Host Panel
+      <span id="connBadge" class="badge state-idle" style="margin-left:auto;"><span class="badge-dot"></span><span id="connText">Idle</span></span>
+    </div>
+
+    <!-- DIAGNOSTICS: always visible proof that events are (or aren't) arriving -->
+    <div class="panel section">
+      <h3>Live Diagnostics</h3>
+      <div class="diag-grid">
+        <div class="diag-tile">
+          <div class="diag-label">Raw events received</div>
+          <div class="diag-value" id="diagCount">0</div>
+        </div>
+        <div class="diag-tile">
+          <div class="diag-label">Connection</div>
+          <div class="diag-value small" id="diagConn">Idle</div>
+        </div>
+        <div class="diag-tile" style="grid-column: 1 / -1;">
+          <div class="diag-label">Last received</div>
+          <div class="diag-value small" id="diagLast">Nothing yet</div>
+        </div>
+      </div>
+      <div class="small-note">This counter increases on <b>every</b> incoming chat event, even ones that don't match anything — if it's stuck at 0 during a live stream, comments aren't reaching the server. If it's climbing but nothing else on this page reacts, comments are arriving but not being recognized as guesses.</div>
+    </div>
+
+    <!-- CONNECTION -->
+    <div class="panel section">
+      <h3>TikTok LIVE Connection</h3>
+      <div class="row">
+        <input type="text" id="usernameInput" placeholder="TikTok username (without @)" />
+        <button class="btn-primary" id="connectBtn">Connect</button>
+        <button class="btn-secondary" id="disconnectBtn">Disconnect</button>
+      </div>
+      <div class="small-note" id="connMsg">Not connected yet.</div>
+      <div class="toggle-row">
+        <span>Test Mode (no live needed — simulates chat)</span>
+        <label class="switch">
+          <input type="checkbox" id="testModeToggle" />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- GAME STATE -->
+    <div class="panel section">
+      <h3>Current Round</h3>
+      <div class="row" style="justify-content: space-between;">
+        <span id="roundStatus">No round active</span>
+        <span id="timerText" style="font-weight:800;"></span>
+      </div>
+      <div class="answer-reveal" id="answerReveal" style="display:none;"></div>
+      <div class="hint-log" id="hintLog"></div>
+      <div class="row">
+        <span>Difficulty:</span>
+        <button class="btn-secondary" id="diffAll">All countries</button>
+        <button class="btn-secondary" id="diffEasy">Easy</button>
+      </div>
+    </div>
+
+    <!-- HOST TEST / ANSWER INPUT -->
+    <div class="panel section">
+      <h3>Type as Host (test a guess, or jump in yourself)</h3>
+      <div class="row">
+        <input type="text" id="hostNameInput" placeholder="Name to show" value="Host" style="max-width:120px;" />
+        <input type="text" id="hostTextInput" placeholder="Type a country/capital or any message…" />
+        <button class="btn-primary" id="hostSendBtn">Send</button>
+      </div>
+      <div class="small-note">This is injected exactly like a real viewer comment — use it to test the game logic anytime, or to answer/comment live yourself.</div>
+    </div>
+
+    <!-- RECENT GUESSES -->
+    <div class="panel section">
+      <h3>Recent Guesses</h3>
+      <div class="guess-log" id="guessLog"><div class="small-note">No guesses yet.</div></div>
+    </div>
+
+    <!-- MINI LEADERBOARD -->
+    <div class="panel section">
+      <h3>Top 10</h3>
+      <div id="miniLeaderboard"><div class="small-note">No scores yet.</div></div>
+    </div>
+
+    <div class="small-note" style="text-align:center; padding: 6px 0 0;">
+      Public display page for OBS / viewers: <a href="/" target="_blank">open in new tab</a>
+    </div>
+  </div>
+
+  <!-- STICKY ACTION BAR: never scrolls off screen -->
+  <div class="sticky-bar">
+    <button class="btn-primary" id="startRoundBtn">▶ Start Round</button>
+    <button class="btn-warn" id="hintBtn">💡 Hint</button>
+    <button class="btn-secondary" id="skipRoundBtn">⏭ Skip</button>
+    <button class="btn-danger" id="resetBtn">⟲ Reset</button>
+  </div>
+</div>
+
+<script src="viewport-fix.js"></script>
+<script src="ws-client.js"></script>
+<script src="host.js"></script>
+</body>
+</html>

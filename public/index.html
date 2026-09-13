@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>CAPITALE — Live</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app-shell">
+  <div class="display-shell">
+    <div class="header-bar panel">
+      <div class="logo">🌍 CAPITALE</div>
+      <div class="row" style="gap:14px;">
+        <span id="connBadge" class="badge state-idle"><span class="badge-dot"></span><span id="connText">Idle</span></span>
+        <div class="timer-ring-wrap">
+          <svg width="64" height="64" viewBox="0 0 64 64">
+            <circle class="timer-ring-bg" cx="32" cy="32" r="27"></circle>
+            <circle id="timerRing" class="timer-ring-fg" cx="32" cy="32" r="27" stroke-dasharray="169.6" stroke-dashoffset="0"></circle>
+          </svg>
+          <div class="timer-num" id="timerNum">--</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage panel">
+      <div class="stage-eyebrow" id="roundLabel">Waiting for host to start a round</div>
+      <div class="stage-continent" id="continentLabel">&nbsp;</div>
+      <div class="stage-prompt" id="promptLabel">Guess the capital city!</div>
+      <div class="hint-box" id="hintBox" style="display:none;"></div>
+      <div class="cta">Type your guess in the <span>TikTok comments</span> — country or capital, either works!</div>
+
+      <div class="winner-banner hidden" id="winnerBanner">
+        <div class="winner-title">🎉 Correct! 🎉</div>
+        <div class="winner-name" id="winnerName"></div>
+        <div class="winner-points" id="winnerPoints"></div>
+        <div class="winner-answer" id="winnerAnswer"></div>
+      </div>
+    </div>
+
+    <div class="side-col">
+      <div class="panel" style="flex:1; display:flex; flex-direction:column; min-height:0;">
+        <div class="panel-title">Live guesses</div>
+        <div class="chat-feed" id="chatFeed"></div>
+      </div>
+      <div class="panel" style="flex:1; display:flex; flex-direction:column; min-height:0;">
+        <div class="panel-title">Top 10</div>
+        <div class="leaderboard" id="leaderboard"><div class="lb-empty">No scores yet — first correct guess kicks things off!</div></div>
+      </div>
+    </div>
+
+    <div class="footer-note">Difficulty: <span id="difficultyLabel">All countries</span></div>
+  </div>
+</div>
+
+<script src="viewport-fix.js"></script>
+<script src="ws-client.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
